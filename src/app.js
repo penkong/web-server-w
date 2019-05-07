@@ -35,35 +35,38 @@ app.use(express.static(publicDir));
 // for dynamic page of hbs
 app.get('', (req, res) => {
   res.render('index', {
-    title: 'weather App',
-    name: 'mkz'
+    title: 'weather App | find your area temperature',
+    name: 'Created by MKz'
   })
+
 })
 
 app.get('/about', (req, res) => {
   res.render('about', {
-    title: 'weather App',
-    name: 'mkz'
+    title: 'weather App | find your area temperature',
+    name: 'Created by MKz'
   })
 })
 
 app.get('/help', (req, res) => {
   res.render('help', {
-    title: 'weather app',
-    name: 'mkz'
+    title: 'weather App | find your area temperature',
+    name: 'Created by MKz'
   })
 })
 
 app.get('/help/*', (req, res) => {
   res.render('404', {
-    title: 'article not found please join back'
+    title: 'article not found please join back',
+    name: 'Created by MKz'
   })
 })
 
 // 404 handler
 app.get('*', (req, res) => {
   res.render('404', {
-    title: 'there is not such thing here 404!'
+    title: 'there is not such thing here 404!',
+    name: 'Created by MKz'
   })
 })
 //===========================================
@@ -82,7 +85,7 @@ app.get('*', (req, res) => {
 app.get('/weather', (res, req) => {
   res.send('d');
 })
-
+// nodemon src/app.js -e js,hbs
 
 
 
