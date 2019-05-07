@@ -1,6 +1,10 @@
 const express = require('express');
 const path = require('path');
 const hbs = require('hbs');
+
+//---------------------------------------------
+const geocode = require('./utils/geocode');
+const forecast = require('./utils/forecast');
 //--------------------
 //app.com
 //app.com/help
@@ -55,6 +59,65 @@ app.get('/help', (req, res) => {
   })
 })
 
+////////
+//sends back json
+app.get('/weather', (req, res) => {
+  //catch query string from url == additional information
+  if (!req.query.address) {
+    return res.send({
+      error: 'You must provide a location'
+    })
+  }
+  //err0r and data
+  geocode(req.query.address, (error, {
+    latitude,
+    longitude,
+    location
+  } = {}) => {
+    if (error) {
+      return res.send({
+        error
+      })
+    }
+    forecast(latitude, longitude, (error, forecastData) => {
+      if (error) {
+        return res.send({
+          error
+        })
+      }
+      res.send({
+        location,
+        address: req.query.address,
+        forecast: forecastData
+      })
+    })
+  })
+})
+
+
+
+app.get('/products', (req, res) => {
+  //catch query string from url
+  if (!req.query.search) {
+    return res.send({
+      error: 'You must provide search term'
+    })
+  }
+  req.query()
+  res.send({
+    products: []
+  })
+})
+
+
+
+
+
+
+
+
+/////////////////////////////////////
+// 404 handler
 app.get('/help/*', (req, res) => {
   res.render('404', {
     title: 'article not found please join back',
@@ -62,7 +125,6 @@ app.get('/help/*', (req, res) => {
   })
 })
 
-// 404 handler
 app.get('*', (req, res) => {
   res.render('404', {
     title: 'there is not such thing here 404!',
@@ -71,62 +133,10 @@ app.get('*', (req, res) => {
 })
 //===========================================
 
-
-
-
-
-
-
-
-
-
-
-//functionality do here.
-app.get('/weather', (res, req) => {
-  res.send('d');
-})
 // nodemon src/app.js -e js,hbs
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //server runner
 app.listen(3000, () => {
   console.log('server is up on port 3000!...');
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
