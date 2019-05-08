@@ -9,6 +9,8 @@ const forecast = require('./utils/forecast');
 //app.com
 //app.com/help
 const app = express();
+const port = process.env.PORT || 3000;
+
 
 
 // cl __dirname and __filename
@@ -137,6 +139,6 @@ app.get('*', (req, res) => {
 
 
 //server runner
-app.listen(3000, () => {
-  console.log('server is up on port 3000!...');
+app.listen(port, () => {
+  console.log(`server is up on port ${port}!...`);
 })
